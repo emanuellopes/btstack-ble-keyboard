@@ -152,7 +152,7 @@ static void update_battery()
         battery--;
     }
 
-    battery_service_server_set_battery_value(battery);
+    // battery_service_server_set_battery_value(battery);
 }
 
 /**
@@ -170,6 +170,7 @@ static void timer_handler(btstack_timer_source_t *ts)
     }
     if (!play_pause)
     {
+        printf("play pause\n");
         send_report_media(205); // send play pause
         send_report_media(0);   // simulate keyup
         play_pause = true;
@@ -214,6 +215,7 @@ static void packet_handler(uint8_t packet_type, uint16_t channel, uint8_t *packe
     case HCI_EVENT_DISCONNECTION_COMPLETE:
         con_handle = HCI_CON_HANDLE_INVALID;
         printf("Disconnected\n");
+        play_pause = false;
         break;
     case HCI_EVENT_HIDS_META:
         switch (hci_event_hids_meta_get_subevent_code(packet))
@@ -326,10 +328,10 @@ int btstack_main(void)
     battery_service_server_init(battery);
 
     // setup device information service
-    device_information_service_server_init();
+    //device_information_service_server_init();
 
     // setup HID Device service
-    hids_device_init_with_storage(22, hid_descriptor_keyboard_boot_mode, sizeof(hid_descriptor_keyboard_boot_mode), 2, hid_reports_generic_storage);
+    hids_device_init_with_storage(0, hid_descriptor_keyboard_boot_mode, sizeof(hid_descriptor_keyboard_boot_mode), 2, hid_reports_generic_storage);
 
     for (int i = 0; i < 2; i++)
     {
