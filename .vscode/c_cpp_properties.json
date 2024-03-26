@@ -1,0 +1,31 @@
+{
+    "env": {
+        "myIncludePath": [
+            "${workspaceFolder}/**",
+            "${env:PICO_SDK_PATH}/**"
+        ]
+    },
+    "configurations": [
+        {
+            "name": "Mac",
+            "compilerPath": "/usr/local/bin/arm-none-eabi-gcc",
+            "intelliSenseMode": "macos-clang-x64",
+            "includePath": [
+                "${myIncludePath}"
+            ],
+            "defines": [
+                "${myDefines}"
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "browse": {
+                "path": [
+                    "${myIncludePath}"
+                ]
+            },
+            "configurationProvider" : "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4,
+    "enableConfigurationSquiggles": true
+}
